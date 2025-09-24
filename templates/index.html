@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flask Calendar</title>
+</head>
+<body>
+    <h1>Calendar Tracker</h1>
+    <p>Today: {{ today }}</p>
+
+    <form action="/add" method="post">
+        <input type="date" name="date" required>
+        <input type="text" name="note" placeholder="Enter note" required>
+        <button type="submit">Add</button>
+    </form>
+
+    <h2>Saved Notes</h2>
+    <ul>
+    {% for date, note in calendar_data.items() %}
+        <li>{{ date }} : {{ note }}</li>
+    {% endfor %}
+    </ul>
+</body>
+</html>
+

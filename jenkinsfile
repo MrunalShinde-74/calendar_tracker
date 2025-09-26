@@ -1,0 +1,23 @@
+pipeline {
+  agent any
+  stages {
+    stage('Checkout') {
+      steps { git url: 'https://github.com/YOUR_USER/flask-calendar.git', branch: 'main' }
+    }
+    stage('Build Docker') {
+      steps {
+        sh 'docker build --no-cache -t flask-calendar .'
+      }
+    }
+    stage('Run Container') {
+      steps {
+        sh '''
+          docker stop flask-calendar || true
+          docker rm flask-calendar || true
+          docker run -d --name flask-calendar -p 5000:5000 flask-calendar
+        '''
+      }
+    }
+  }
+}
+
